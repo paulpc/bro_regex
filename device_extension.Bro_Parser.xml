@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:device-extension xmlns:ns2="event_parsing/device_extension">
+    <pattern id="allEventNames">(.*)</pattern>
+    <pattern id="BROfilesEvent">(bro_files)\:[\s\t]+(\d+\.\d+|\-)\t(.+?)\t([\d\.\,\-]+|\(empty\))\t([\d\.\,\-]+|\(empty\))\t(.+?)\t(.+?)\t(\d+|\-)\t(.+?)\t(.+?)\t(.+?)\t(\d+\.\d+|\-)\t(F|T|\-)\t(F|T|\-)\t(\d+|\-)\t(\d+|\-)\t(\d+|\-)\t(\d+|\-)\t(F|T|\-)\t(.+?)\t(.+?)\t(.+?)\t(.+?)\t(.+?)</pattern>
+    <pattern id="BROweirdEvent">(bro_weird)\:[\s\t]+(\d+\.\d+|\-)\t(.+?)\t(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|\-)\t(\d{1,5}|\-)\t(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|\-)\t(\d{1,5}|\-)\t(.+?)\t(.+?)\t(F|T|\-)\t(.+?)</pattern>
+    <pattern id="BROnoticeEvent">(bro_notice)\:[\s\t]+(\d+\.\d+|\-)\t(.+?)\t(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|\-)\t(\d{1,5}|\-)\t(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|\-)\t(\d{1,5}|\-)\t(.+?)\t(.+?)\t(.+?)\t(.+?)\t(.+?)\t(.+?)\t(.+?)\t(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|\-)\t(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|\-)\t(\d{1,5}|\-)\t(\d+|\-)\t(.+?)\t(.+?)\t(\d+\.\d+|\-)\t(F|T|\-)\t(.+?)\t(.+?)\t(.+?)\t(\d+\.\d+|\-)\t(\d+\.\d+|\-)</pattern>
+    <pattern id="BROsmtpEvent">(bro_smtp)\:[\s\t]+(\d+\.\d+|\-)\t(.+?)\t(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|\-)\t(\d{1,5}|\-)\t(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|\-)\t(\d{1,5}|\-)\t(\d+|\-)\t(.+?)\t(.+?)\t(.+?)\t(.+?)\t(.+?)\t(.+?)\t(.+?)\t(.+?)\t(.+?)\t(.+?)\t(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|\-)\t(.+?)\t(.+?)\t(.+?)\t([\d\.\,\-]+)\t(.+?)\t(.+?)\t(F|T|\-)</pattern>
+    <match-group description="Log Source Extension" order="1">
+        <matcher order="1" enable-substitutions="false" capture-group="1" pattern-id="BROfilesEvent" field="EventName"/>
+        <matcher order="1" capture-group="4" pattern-id="BROfilesEvent" field="SourceIp"/>
+        <matcher order="1" capture-group="5" pattern-id="BROfilesEvent" field="DestinationIp"/>
+        <matcher order="2" enable-substitutions="false" capture-group="1" pattern-id="BROweirdEvent" field="EventName"/>
+        <matcher order="2" capture-group="4" pattern-id="BROweirdEvent" field="SourceIp"/>
+        <matcher order="2" capture-group="5" pattern-id="BROweirdEvent" field="SourcePort"/>
+        <matcher order="2" capture-group="6" pattern-id="BROweirdEvent" field="DestinationIp"/>
+        <matcher order="2" capture-group="7" pattern-id="BROweirdEvent" field="DestinationPort"/>
+        <matcher order="3" enable-substitutions="false" capture-group="1" pattern-id="BROnoticeEvent" field="EventName"/>
+        <matcher order="3" capture-group="4" pattern-id="BROnoticeEvent" field="SourceIp"/>
+        <matcher order="3" capture-group="5" pattern-id="BROnoticeEvent" field="SourcePort"/>
+        <matcher order="3" capture-group="6" pattern-id="BROnoticeEvent" field="DestinationIp"/>
+        <matcher order="3" capture-group="7" pattern-id="BROnoticeEvent" field="DestinationPort"/>
+        <matcher order="4" enable-substitutions="false" capture-group="1" pattern-id="BROsmtpEvent" field="EventName"/>
+        <matcher order="4" capture-group="4" pattern-id="BROsmtpEvent" field="SourceIp"/>
+        <matcher order="4" capture-group="5" pattern-id="BROsmtpEvent" field="SourcePort"/>
+        <matcher order="4" capture-group="6" pattern-id="BROsmtpEvent" field="DestinationIp"/>
+        <matcher order="4" capture-group="7" pattern-id="BROsmtpEvent" field="DestinationPort"/>
+        <event-match-multiple device-event-category="unknown" capture-group-index="1" pattern-id="allEventNames"/>
+    </match-group>
+</ns2:device-extension>
